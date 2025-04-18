@@ -72,161 +72,34 @@ class AlgoStrategy(gamelib.AlgoCore):
 
         # Core strategy
         if game_state.turn_number == 0:
-            self.initial_defense(game_state)
+            self.patrol_far_interceptors(game_state)
+        elif game_state.turn_number == 1:  # or any turn number you want
+            self.funnel_setup(game_state)
+            should_attack, location, num_scouts = self.should_attack(game_state)
+            if should_attack:
+                self.scout_attack(game_state, location, num_scouts)
         else:
             should_attack, location, num_scouts = self.should_attack(game_state)
             if should_attack:
                 self.scout_attack(game_state, location, num_scouts)
-        # Defense improvements
-        did_improve = True
-        while did_improve and game_state.get_resource(1) >= 2:
-            defense = self.parse_defenses(game_state)
-            sector_to_upgrade = self.defense_heuristic(defense)
-            did_improve = self.improve_defense(game_state, sector_to_upgrade, defense[sector_to_upgrade])
+            # Defense improvements
+            did_improve = True
+            while did_improve and game_state.get_resource(1) >= 2:
+                defense = self.parse_defenses(game_state)
+                sector_to_upgrade = self.defense_heuristic(defense)
+                did_improve = self.improve_defense(game_state, sector_to_upgrade, defense[sector_to_upgrade])
 
-        # Supporter management and reinforcement
-        self.support_management(game_state, location if 'location' in locals() else None)
+            # Supporter management and reinforcement
+            self.support_management(game_state, location if 'location' in locals() else None)
 
-        self.build_far_side_walls(game_state)
+            self.build_far_side_walls(game_state)
         # self.defend_with_interceptors(game_state)
-        self.patrol_far_interceptors(game_state)
         game_state.submit_turn()
     
-    def patrol_far_interceptors(self, game_state: GameState):
-        # 1) Look for any recorded breach in cols 0–3
-        target = None
-        for loc in self.scored_on_locations:
-            x, y = loc
-            if 0 <= x <= 3:
-                target = x
-                break
-        if target is None:
-            return  # no far‑side breach recorded
-
-        # 2) find your free bottom‑left edge spots
-        edges = game_state.game_map.get_edge_locations(game_state.game_map.BOTTOM_LEFT)
-        edges = [e for e in edges if not game_state.contains_stationary_unit(e)]
-        if not edges:
-            return
-
-        # 3) spend exactly enough MP to spawn one interceptor
-        cost = gamelib.GameUnit(INTERCEPTOR, self.config).cost[MP]
-        if game_state.get_resource(MP) < cost:
-            return
-
-        # 4) pick the edge whose x is closest to the breach
-        best_edge = min(edges, key=lambda e: abs(e[0] - target))
-        game_state.attempt_spawn(INTERCEPTOR, best_edge)
-
-        # 5) clear that breach so you only react once
-        self.scored_on_locations = [loc for loc in self.scored_on_locations if loc[0] != target]
-    
-    # def defend_with_interceptors(self, game_state: GameState):
-    #     # 1) Gather turret firing radius
-    #     turret_proto = gamelib.GameUnit(TURRET, self.config)
-    #     attack_radius = turret_proto.attackRange
-    #     radius_sq = attack_radius * attack_radius
-
-    #     # 2) Collect all your turret positions
-    #     turrets = [pos for pos in game_state.game_map
-    #             if (u := game_state.contains_stationary_unit(pos))
-    #             and u.unit_type == TURRET]
-
-    #     # 3) Define the barrier cells (cols 14–27 at row 13)
-    #     barrier = [[x, 13] for x in range(14, 28)]
-
-    #     # 4) Find any cells no turret can cover
-    #     uncovered = []
-    #     for bx, by in barrier:
-    #         if not any((bx - tx)**2 + (by - ty)**2 <= radius_sq for tx, ty in turrets):
-    #             uncovered.append([bx, by])
-    #     if not uncovered:
-    #         return  # all covered
-
-    #     # 5) How many interceptors can you afford? (cast to int)
-    #     cost = gamelib.GameUnit(INTERCEPTOR, self.config).cost[MP]
-    #     mp = game_state.get_resource(MP)
-    #     max_spawn = int(mp // cost)
-    #     if max_spawn <= 0:
-    #         return  # no MP
-
-    #     # 6) Trim holes to that budget
-    #     holes = uncovered[:max_spawn]
-
-    #     # 7) Find your free bottom-right edge spots
-    #     edges = game_state.game_map.get_edge_locations(game_state.game_map.BOTTOM_RIGHT)
-    #     edges = [e for e in edges if not game_state.contains_stationary_unit(e)]
-    #     if not edges:
-    #         return  # nowhere to spawn
-
-    #     # 8) Send exactly one interceptor per hole
-    #     for hx, hy in holes:
-    #         best_edge = min(edges, key=lambda e: abs(e[0] - hx))
-    #         game_state.attempt_spawn(INTERCEPTOR, best_edge)
-    
-    def support_management(self, game_state, scout_location):
-        t = game_state.turn_number
-        if (t < 3 or (t - 3) % 8 == 0) and scout_location:
-            # Remove out-of-range supporters
-            new_supports = []
-            for loc in self.support_locations:
-                if self.manhattan_distance(loc, scout_location) > 2:
-                    game_state.attempt_remove(loc)
-                else:
-                    new_supports.append(loc)
-            self.support_locations = new_supports
-            # Spawn new supporters around scout spawn
-            potential = game_state.game_map.get_locations_in_range(scout_location, 2)
-            # Exclude blockers on scout path
-            path = game_state.find_path_to_edge(scout_location)
-            for loc in potential:
-                if loc not in self.support_locations and loc not in path and game_state.can_spawn(SUPPORT, loc):
-                    if game_state.attempt_spawn(SUPPORT, loc):
-                        self.support_locations.append(loc)
-                        game_state.attempt_upgrade(loc)
-            self.last_support_update = t
-        # Always attempt to upgrade existing supporters each turn
-        for loc in list(self.support_locations):
-            game_state.attempt_upgrade(loc)
-    
-    def manhattan_distance(self, a, b):
-        return abs(a[0] - b[0]) + abs(a[1] - b[1])
-
-
     """
     NOTE: All the methods after this point are part of the sample starter-algo
     strategy and can safely be replaced for your custom algo.
     """
-    
-    
-
-    def main_strategy(self, game_state: GameState):
-        
-        if game_state.turn_number == 0:
-            self.initial_defense(game_state)
-            
-        if game_state.turn_number > 0:
-            should_attack, location, num_scouts = self.should_attack(game_state)
-            if should_attack:
-                self.scout_attack(game_state, location, num_scouts)
-        # if self.should_defend(game_state):
-        did_improve = True
-        while (did_improve and game_state.get_resource(SP) >= 2):
-            defense = self.parse_defenses(game_state)
-            sector_to_upgrade = self.defense_heuristic(defense)
-            did_improve = self.improve_defense(game_state, sector_to_upgrade, defense[sector_to_upgrade])
-            
-        
-    def initial_defense(self, game_state):
-        #TODO: do testing to optimize these placements, play around with putting extra turrets in front or upgraded walls
-        
-        game_state.attempt_spawn(TURRET, self.start_points)
-        game_state.attempt_upgrade(self.start_points)
-        
-        wall_locations = [[4,13], [10,13], [17,13], [23,13]]
-        
-        game_state.attempt_spawn(WALL, wall_locations)
-    
     
     def improve_defense(self, game_state: gamelib.GameState, sector, defense):
         
@@ -304,38 +177,173 @@ class AlgoStrategy(gamelib.AlgoCore):
         
         # with >= 2 SP try to build unupgraded wall
         return False
-        
-    def try_build_upgraded_turret(self, game_state, turret_seq):
-        if game_state.get_resource(0) >= 8:
-            for i in range(len(turret_seq)):
-                loc = turret_seq[i]
-                if not game_state.contains_stationary_unit(loc):
-                    game_state.attempt_spawn(TURRET, loc)
-                    game_state.attempt_upgrade(loc)
-                    return True
-        return False
     
-    def try_build_turret(self, game_state, turret_seq): 
-        if game_state.get_resource(0) >= 3:
-            for i in range(len(turret_seq)):
-                loc = turret_seq[i]
-                if not game_state.contains_stationary_unit(loc):
-                    game_state.attempt_spawn(TURRET, loc)
-                    return True
-        return False
+    
+    def funnel_setup(self, game_state):
         
-    def try_upgrade(self, game_state: gamelib.GameState, location):
-        if game_state.contains_stationary_unit(location):
-            unit: gamelib.GameUnit = game_state.contains_stationary_unit(location)
-            if unit.unit_type == TURRET and unit.health / unit.max_health >= 0.75:
-                # try upgrade turret if hp >= 75%, since turret hp doesn't get restored on upgrade
-                return game_state.attempt_upgrade(location) > 0
-                
-            elif unit.unit_type == WALL:
-                # always upgrade wall since it gives + 80hp
-                return game_state.attempt_upgrade(location) > 0
-                
-        return False
+        wall_locations = [
+            [0,13], [1,13], [2,13], [6,13], [25,13], [26,13], [27,13],
+            [7,12],
+            [7,11], [25,11],
+            [8, 10], [24,10],
+            [4,9], [9,9],[23,9],
+            [10,8], [11,8], [12,8], [13,8], [14,8], [15,8], [16,8], [17,8], [18,8], [19,8], [20,8], [21,8], [22,8], [23,8]
+        ]
+        
+        turret_locations = [
+            [3,13], 
+            [26,12], [3,12],
+            [4,11], [5,11],
+            [7,10]
+        ]
+        
+        game_state.attempt_spawn(WALL, wall_locations)
+        game_state.attempt_spawn(TURRET, turret_locations)
+        game_state.attempt_upgrade([[5,11], [6,13]])
+        
+        
+    def patrol_far_interceptors(self, game_state: GameState):
+        # 1) Look for any recorded breach in cols 0–3
+        target = None
+        for loc in self.scored_on_locations:
+            x, y = loc
+            if 0 <= x <= 3:
+                target = x
+                break
+        if target is None:
+            return  # no far‑side breach recorded
+
+        # 2) find your free bottom‑left edge spots
+        edges = game_state.game_map.get_edge_locations(game_state.game_map.BOTTOM_LEFT)
+        edges = [e for e in edges if not game_state.contains_stationary_unit(e)]
+        if not edges:
+            return
+
+        # 3) spend exactly enough MP to spawn one interceptor
+        cost = gamelib.GameUnit(INTERCEPTOR, self.config).cost[MP]
+        if game_state.get_resource(MP) < cost:
+            return
+
+        # 4) pick the edge whose x is closest to the breach
+        best_edge = min(edges, key=lambda e: abs(e[0] - target))
+        game_state.attempt_spawn(INTERCEPTOR, best_edge)
+
+        # 5) clear that breach so you only react once
+        self.scored_on_locations = [loc for loc in self.scored_on_locations if loc[0] != target]
+    
+    # def defend_with_interceptors(self, game_state: GameState):
+    #     # 1) Gather turret firing radius
+    #     turret_proto = gamelib.GameUnit(TURRET, self.config)
+    #     attack_radius = turret_proto.attackRange
+    #     radius_sq = attack_radius * attack_radius
+
+    #     # 2) Collect all your turret positions
+    #     turrets = [pos for pos in game_state.game_map
+    #             if (u := game_state.contains_stationary_unit(pos))
+    #             and u.unit_type == TURRET]
+
+    #     # 3) Define the barrier cells (cols 14–27 at row 13)
+    #     barrier = [[x, 13] for x in range(14, 28)]
+
+    #     # 4) Find any cells no turret can cover
+    #     uncovered = []
+    #     for bx, by in barrier:
+    #         if not any((bx - tx)**2 + (by - ty)**2 <= radius_sq for tx, ty in turrets):
+    #             uncovered.append([bx, by])
+    #     if not uncovered:
+    #         return  # all covered
+
+    #     # 5) How many interceptors can you afford? (cast to int)
+    #     cost = gamelib.GameUnit(INTERCEPTOR, self.config).cost[MP]
+    #     mp = game_state.get_resource(MP)
+    #     max_spawn = int(mp // cost)
+    #     if max_spawn <= 0:
+    #         return  # no MP
+
+    #     # 6) Trim holes to that budget
+    #     holes = uncovered[:max_spawn]
+
+    #     # 7) Find your free bottom-right edge spots
+    #     edges = game_state.game_map.get_edge_locations(game_state.game_map.BOTTOM_RIGHT)
+    #     edges = [e for e in edges if not game_state.contains_stationary_unit(e)]
+    #     if not edges:
+    #         return  # nowhere to spawn
+
+    #     # 8) Send exactly one interceptor per hole
+    #     for hx, hy in holes:
+    #         best_edge = min(edges, key=lambda e: abs(e[0] - hx))
+    #         game_state.attempt_spawn(INTERCEPTOR, best_edge)
+    
+    def support_management(self, game_state, scout_location):
+        t = game_state.turn_number
+        if (t < 3 or (t - 3) % 8 == 0) and scout_location:
+            # Remove out-of-range supporters
+            new_supports = []
+            for loc in self.support_locations:
+                if self.manhattan_distance(loc, scout_location) > 2:
+                    game_state.attempt_remove(loc)
+                else:
+                    new_supports.append(loc)
+            self.support_locations = new_supports
+            # Spawn new supporters around scout spawn
+            potential = game_state.game_map.get_locations_in_range(scout_location, 2)
+            # Exclude blockers on scout path
+            path = game_state.find_path_to_edge(scout_location)
+            for loc in potential:
+                if loc not in self.support_locations and loc not in path and game_state.can_spawn(SUPPORT, loc):
+                    if game_state.attempt_spawn(SUPPORT, loc):
+                        self.support_locations.append(loc)
+                        game_state.attempt_upgrade(loc)
+            self.last_support_update = t
+        # Always attempt to upgrade existing supporters each turn
+        for loc in list(self.support_locations):
+            game_state.attempt_upgrade(loc)
+    
+    def manhattan_distance(self, a, b):
+        return abs(a[0] - b[0]) + abs(a[1] - b[1])
+
+    def stall_with_interceptors(self, game_state):
+        """
+        Send out interceptors at random locations to defend our base from enemy moving units.
+        """
+        # We can spawn moving units on our edges so a list of all our edge locations
+        friendly_edges = game_state.game_map.get_edge_locations(game_state.game_map.BOTTOM_LEFT) + game_state.game_map.get_edge_locations(game_state.game_map.BOTTOM_RIGHT)
+        
+        # Remove locations that are blocked by our own structures 
+        # since we can't deploy units there.
+        deploy_locations = self.filter_blocked_locations(friendly_edges, game_state)
+        
+        # While we have remaining MP to spend lets send out interceptors randomly.
+        while game_state.get_resource(MP) >= game_state.type_cost(INTERCEPTOR)[MP] and len(deploy_locations) > 0:
+            # Choose a random deploy location.
+            deploy_index = random.randint(0, len(deploy_locations) - 1)
+            deploy_location = deploy_locations[deploy_index]
+            
+            game_state.attempt_spawn(INTERCEPTOR, deploy_location)
+            """
+            We don't have to remove the location since multiple mobile 
+            units can occupy the same space.
+            """
+        
+
+    def main_strategy(self, game_state: GameState):
+        
+        if game_state.turn_number == 0:
+            self.initial_defense(game_state)
+            
+        if game_state.turn_number > 0:
+            should_attack, location, num_scouts = self.should_attack(game_state)
+            if should_attack:
+                self.scout_attack(game_state, location, num_scouts)
+        # if self.should_defend(game_state):
+        did_improve = True
+        while (did_improve and game_state.get_resource(SP) >= 2):
+            defense = self.parse_defenses(game_state)
+            sector_to_upgrade = self.defense_heuristic(defense)
+            did_improve = self.improve_defense(game_state, sector_to_upgrade, defense[sector_to_upgrade])
+            
+        
+    
             
         
     # prioritized sequence of columns, starts near col of start_point, then alternates on each side
@@ -391,114 +399,7 @@ class AlgoStrategy(gamelib.AlgoCore):
                 
         return res
     
-    def parse_defenses(self, game_state: gamelib.GameState):
-        results = [[],[],[],[]]
-        for i in range(4):
-            num_wall = 0
-            num_wallPlus = 0
-            num_turret = 0
-            num_turretPlus = 0
-            
-            weight_wall = 0
-            weight_wallPlus = 0
-            weight_turret = 0
-            weight_turretPlus = 0
-            for j in range(len(self.sectors[i])):
-                if game_state.contains_stationary_unit(self.sectors[i][j]):
-                    unit: gamelib.GameUnit = game_state.contains_stationary_unit(self.sectors[i][j])
-                    weight = unit.health / unit.max_health
-                    
-                    if unit.unit_type == WALL:
-                        if unit.upgraded:
-                            num_wallPlus += 1
-                            weight_wallPlus += weight
-                        else:
-                            num_wall += weight
-                            weight_wall += weight
-                            
-                    #skip support when parsing our own defense, it doesn't really matter
-                    
-                    if unit.unit_type == TURRET:
-                        if unit.upgraded:
-                            num_turretPlus += 1
-                            weight_turretPlus += weight
-                        else:
-                            num_turret += 1
-                            weight_turret += weight
-            
-            results[i].append([weight_wall, weight_wallPlus, weight_turret, weight_turretPlus])
-            results[i].append([num_wall, num_wallPlus, num_turret, num_turretPlus])
-            
-        return results
-    
-    def build_far_side_walls(self, game_state: GameState):
-        # Define a shallow two‐deep wall layer on each far corner
-        wall_spots = [
-            [0, 13], [1, 13],    # left corner
-            [26, 13], [27, 13]   # right corner
-        ]
-        for loc in wall_spots:
-            # Spawn if empty and you can afford it
-            if game_state.can_spawn(WALL, loc):
-                game_state.attempt_spawn(WALL, loc)
-            # Then always try to upgrade it
-            unit = game_state.contains_stationary_unit(loc)
-            if unit and unit.unit_type == WALL and not unit.upgraded:
-                game_state.attempt_upgrade(loc)
                 
-    def defense_heuristic(self, defenses):
-        res = 0
-        minVal = 99999999
-        for i in range(4):
-            #TODO: make a better heuristic, this weighs turret+ at 14 "points", turret- at 6, wall+ at 3, wall- at 1
-            # then we select the sector that has the lowest # of points
-            value = defenses[i][0][3] * 14 + defenses[i][0][2] * 6 + defenses[i][0][1] * 3 + defenses[i][0][0]
-            if defenses[i][0][1] < 1:
-                value *= 0.5
-            if i == 0 or i == 3:
-                value *= 1 # farside
-            if value < minVal:
-                minVal = value
-                res = i
-        
-        return res
-
-    def starter_strategy(self, game_state):
-        """
-        For defense we will use a spread out layout and some interceptors early on.
-        We will place turrets near locations the opponent managed to score on.
-        For offense we will use long range demolishers if they place stationary units near the enemy's front.
-        If there are no stationary units to attack in the front, we will send Scouts to try and score quickly.
-        """
-        # First, place basic defenses
-        # self.build_defences(game_state)
-        # Now build reactive defenses based on where the enemy scored
-        # self.build_reactive_defense(game_state)
-        if game_state.turn_number > 0:
-            self.scout_attack_with_support(game_state)
-                
-    def should_defend(self, game_state):
-        enemy_mobile_points = game_state.get_resource(MP,1)
-        return enemy_mobile_points >= 8
-
-    def build_defences(self, game_state):
-        """
-        Build basic defenses using hardcoded locations.
-        Remember to defend corners and avoid placing units in the front where enemy demolishers can attack them.
-        """
-        # Useful tool for setting up your base locations: https://www.kevinbai.design/terminal-map-maker
-        # More community tools available at: https://terminal.c1games.com/rules#Download
-
-        # Place turrets that attack enemy units
-        turret_locations = [[0, 13], [27, 13], [8, 11], [19, 11], [13, 11], [14, 11]]
-        # attempt_spawn will try to spawn units if we have resources, and will check if a blocking unit is already there
-        game_state.attempt_spawn(TURRET, turret_locations)
-        
-        # Place walls in front of turrets to soak up damage for them
-        wall_locations = [[8, 12], [19, 12]]
-        game_state.attempt_spawn(WALL, wall_locations)
-        # upgrade walls so they soak more damage
-        game_state.attempt_upgrade(wall_locations)
 
     def build_reactive_defense(self, game_state):
         """
@@ -511,28 +412,7 @@ class AlgoStrategy(gamelib.AlgoCore):
             build_location = [location[0], location[1]+1]
             game_state.attempt_spawn(TURRET, build_location)
 
-    def stall_with_interceptors(self, game_state):
-        """
-        Send out interceptors at random locations to defend our base from enemy moving units.
-        """
-        # We can spawn moving units on our edges so a list of all our edge locations
-        friendly_edges = game_state.game_map.get_edge_locations(game_state.game_map.BOTTOM_LEFT) + game_state.game_map.get_edge_locations(game_state.game_map.BOTTOM_RIGHT)
-        
-        # Remove locations that are blocked by our own structures 
-        # since we can't deploy units there.
-        deploy_locations = self.filter_blocked_locations(friendly_edges, game_state)
-        
-        # While we have remaining MP to spend lets send out interceptors randomly.
-        while game_state.get_resource(MP) >= game_state.type_cost(INTERCEPTOR)[MP] and len(deploy_locations) > 0:
-            # Choose a random deploy location.
-            deploy_index = random.randint(0, len(deploy_locations) - 1)
-            deploy_location = deploy_locations[deploy_index]
-            
-            game_state.attempt_spawn(INTERCEPTOR, deploy_location)
-            """
-            We don't have to remove the location since multiple mobile 
-            units can occupy the same space.
-            """
+    
 
     def demolisher_line_strategy(self, game_state):
         """
@@ -817,6 +697,118 @@ class AlgoStrategy(gamelib.AlgoCore):
     #     #         gamelib.debug_write("Got scored on at: {}".format(location))
     #     #         self.scored_on_locations.append(location)
     #     #         gamelib.debug_write("All locations: {}".format(self.scored_on_locations))
+
+    def try_build_upgraded_turret(self, game_state, turret_seq):
+        if game_state.get_resource(0) >= 8:
+            for i in range(len(turret_seq)):
+                loc = turret_seq[i]
+                if not game_state.contains_stationary_unit(loc):
+                    game_state.attempt_spawn(TURRET, loc)
+                    game_state.attempt_upgrade(loc)
+                    return True
+        return False
+    
+    def try_build_turret(self, game_state, turret_seq): 
+        if game_state.get_resource(0) >= 3:
+            for i in range(len(turret_seq)):
+                loc = turret_seq[i]
+                if not game_state.contains_stationary_unit(loc):
+                    game_state.attempt_spawn(TURRET, loc)
+                    return True
+        return False
+        
+    def try_upgrade(self, game_state: gamelib.GameState, location):
+        if game_state.contains_stationary_unit(location):
+            unit: gamelib.GameUnit = game_state.contains_stationary_unit(location)
+            if unit.unit_type == TURRET and unit.health / unit.max_health >= 0.75:
+                # try upgrade turret if hp >= 75%, since turret hp doesn't get restored on upgrade
+                return game_state.attempt_upgrade(location) > 0
+                
+            elif unit.unit_type == WALL:
+                # always upgrade wall since it gives + 80hp
+                return game_state.attempt_upgrade(location) > 0
+                
+        return False
+    
+    
+    def parse_defenses(self, game_state: gamelib.GameState):
+        results = [[],[],[],[]]
+        for i in range(4):
+            num_wall = 0
+            num_wallPlus = 0
+            num_turret = 0
+            num_turretPlus = 0
+            
+            weight_wall = 0
+            weight_wallPlus = 0
+            weight_turret = 0
+            weight_turretPlus = 0
+            for j in range(len(self.sectors[i])):
+                if game_state.contains_stationary_unit(self.sectors[i][j]):
+                    unit: gamelib.GameUnit = game_state.contains_stationary_unit(self.sectors[i][j])
+                    weight = unit.health / unit.max_health
+                    
+                    if unit.unit_type == WALL:
+                        if unit.upgraded:
+                            num_wallPlus += 1
+                            weight_wallPlus += weight
+                        else:
+                            num_wall += weight
+                            weight_wall += weight
+                            
+                    #skip support when parsing our own defense, it doesn't really matter
+                    
+                    if unit.unit_type == TURRET:
+                        if unit.upgraded:
+                            num_turretPlus += 1
+                            weight_turretPlus += weight
+                        else:
+                            num_turret += 1
+                            weight_turret += weight
+            
+            results[i].append([weight_wall, weight_wallPlus, weight_turret, weight_turretPlus])
+            results[i].append([num_wall, num_wallPlus, num_turret, num_turretPlus])
+            
+        return results
+    
+    def build_far_side_walls(self, game_state: GameState):
+        # Define a shallow two‐deep wall layer on each far corner
+        wall_spots = [
+            [0, 13], [1, 13],    # left corner
+            [26, 13], [27, 13]   # right corner
+        ]
+        for loc in wall_spots:
+            # Spawn if empty and you can afford it
+            if game_state.can_spawn(WALL, loc):
+                game_state.attempt_spawn(WALL, loc)
+            # Then always try to upgrade it
+            unit = game_state.contains_stationary_unit(loc)
+            if unit and unit.unit_type == WALL and not unit.upgraded:
+                game_state.attempt_upgrade(loc)
+                
+    def defense_heuristic(self, defenses):
+        res = 0
+        minVal = 99999999
+        for i in range(4):
+            #TODO: make a better heuristic, this weighs turret+ at 14 "points", turret- at 6, wall+ at 3, wall- at 1
+            # then we select the sector that has the lowest # of points
+            value = defenses[i][0][3] * 14 + defenses[i][0][2] * 6 + defenses[i][0][1] * 3 + defenses[i][0][0]
+            if defenses[i][0][1] < 1:
+                value *= 0.5
+            if i == 0 or i == 3:
+                value *= 1 # farside
+            if value < minVal:
+                minVal = value
+                res = i
+        
+        return res
+    
+    
+    def should_defend(self, game_state):
+        enemy_mobile_points = game_state.get_resource(MP,1)
+        return enemy_mobile_points >= 8
+    
+    
 
 
 if __name__ == "__main__":
