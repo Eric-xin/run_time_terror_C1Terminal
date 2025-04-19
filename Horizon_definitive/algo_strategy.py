@@ -26,6 +26,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         self.scored_on = []
         self.sectors = []
         self.start_points = []
+        self.has_switched_to_funnel = False  # Track if we've switched to funnel defense
 
     # ------------------------
     # Lifecycle hooks
@@ -73,6 +74,14 @@ class AlgoStrategy(gamelib.AlgoCore):
             attack, loc, num = self.should_attack(state)
             if attack:
                 self.scout_attack(state, loc, num)
+                
+        # --- Funnel defense ---
+        # Check edge health and switch to funnel if needed, but only once
+        if not self.has_switched_to_funnel and self._should_switch_to_funnel(state):
+            self._remove_edge_units(state)
+            self.funnel_defense(state)
+            self.has_switched_to_funnel = True
+            gamelib.debug_write("Switched to funnel defense")
         
         # --- Far-side walls ---
         self._build_far_side_walls(state)
@@ -331,7 +340,12 @@ class AlgoStrategy(gamelib.AlgoCore):
         t = state.turn_number
         if scout_loc and t >= 5:
             path = state.find_path_to_edge(scout_loc)
-            rng = self.config["unitInformation"][1]["shieldRange"]
+            
+            # Get support unit configuration safely
+            support_config = self.config["unitInformation"][1]
+            # Use attackRange if shieldRange is not available
+            rng = support_config.get("shieldRange", support_config.get("attackRange", 3))
+            
             # prune
             kept = []
             for loc in self.support_locations:
@@ -341,12 +355,14 @@ class AlgoStrategy(gamelib.AlgoCore):
                 else:
                     state.attempt_remove(loc)
             self.support_locations = kept
+            
             # place new
             for loc in state.game_map.get_locations_in_range(scout_loc, rng):
                 if loc not in kept and loc not in path and state.can_spawn(SUPPORT, loc):
                     if state.attempt_spawn(SUPPORT, loc):
                         self.support_locations.append(loc)
                         state.attempt_upgrade(loc)
+                        
         # upgrade all shields
         for loc in list(self.support_locations):
             state.attempt_upgrade(loc)
@@ -362,6 +378,31 @@ class AlgoStrategy(gamelib.AlgoCore):
             unit = state.contains_stationary_unit(loc)
             if unit and unit.unit_type == WALL and not unit.upgraded:
                 state.attempt_upgrade(loc)
+                
+    # ------------------------
+    # Funnel defense
+    # ------------------------        
+    def funnel_defense(self, game_state):
+        
+        wall_locations = [
+            [0,13], [1,13], [2,13], [6,13], [25,13], [26,13], [27,13],
+            [7,12],
+            [7,11], [25,11],
+            [8, 10], [24,10],
+            [4,9], [9,9],[23,9],
+            [10,8], [11,8], [12,8], [13,8], [14,8], [15,8], [16,8], [17,8], [18,8], [19,8], [20,8], [21,8], [22,8], [23,8]
+        ]
+        
+        turret_locations = [
+            [3,13], 
+            [26,12], [3,12],
+            [4,11], [5,11],
+            [7,10]
+        ]
+        
+        game_state.attempt_spawn(WALL, wall_locations)
+        game_state.attempt_spawn(TURRET, turret_locations)
+        game_state.attempt_upgrade([[5,11], [6,13]])
 
     # ------------------------
     # Offense logic
@@ -510,6 +551,49 @@ class AlgoStrategy(gamelib.AlgoCore):
     @staticmethod
     def manhattan(a, b):
         return abs(a[0]-b[0]) + abs(a[1]-b[1])
+
+    def _should_switch_to_funnel(self, state: GameState) -> bool:
+        """
+        Check if we should switch to funnel defense based on edge health.
+        Returns True if weighted health at edges is too low.
+        """
+        # Define edge areas (adjust these coordinates as needed)
+        left_edge = [[x, y] for x in range(0, 7) for y in range(10, 14)]
+        right_edge = [[x, y] for x in range(21, 28) for y in range(10, 14)]
+        edge_locations = left_edge + right_edge
+        
+        total_health = 0
+        total_units = 0
+        
+        for loc in edge_locations:
+            if state.contains_stationary_unit(loc):
+                unit = state.contains_stationary_unit(loc)
+                # Calculate weighted health (more weight to turrets)
+                weight = 2.0 if unit.unit_type == TURRET else 1.0
+                health_percent = unit.health / unit.max_health
+                total_health += health_percent * weight
+                total_units += 1
+        
+        if total_units == 0:
+            return False
+            
+        avg_weighted_health = total_health / total_units
+        
+        # Switch to funnel if average weighted health is below 50%
+        return avg_weighted_health < 0.5
+
+    def _remove_edge_units(self, state: GameState):
+        """
+        Remove all stationary units in the edge areas to prepare for funnel defense.
+        """
+        # Define edge areas (same as in _should_switch_to_funnel)
+        left_edge = [[x, y] for x in range(0, 7) for y in range(10, 14)]
+        right_edge = [[x, y] for x in range(21, 28) for y in range(10, 14)]
+        edge_locations = left_edge + right_edge
+        
+        for loc in edge_locations:
+            if state.contains_stationary_unit(loc):
+                state.attempt_remove(loc)
 
 if __name__ == "__main__":
     AlgoStrategy().start()
