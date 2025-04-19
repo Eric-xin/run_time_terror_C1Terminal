@@ -92,20 +92,3 @@ This module contains the `GameUnit` class which holds information about a Unit.
 ### `gamelib/util.py`
 
 Helper functions and values that do not yet have a better place to live.
-
-## Strategy Overview
-
-The starter strategy is designed to highlight a few common `GameMap` functions
-and give the user a functioning example to work with. It's gameplan is to
-draw the C1 logo, place turrets in its corners, and randomly spawn units.
-
-# PPO Defense Strategy for Terminal Game
-
-This project provides a Proximal Policy Optimization (PPO) reinforcement learning algorithm for the Terminal game, with a focus on defensive strategies.
-
-## Files
-
-- `algo_strategy.py` - The main algorithm file used to play the game
-- `ppo_defense_strategy.py` - The PPO defensive strategy implementation
-- `train_ppo.py` - Script to train the PPO algorithm over multiple episodes
-- `gamelib/` - Core game libraries provided by the platform

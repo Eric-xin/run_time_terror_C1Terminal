@@ -569,6 +569,13 @@ class AlgoStrategy(gamelib.AlgoCore):
         should_attack, location, num_scouts = self.should_attack(state)
         if should_attack:
             self.scout_attack(state, location, num_scouts)
+            return 
+        else: 
+            max_interceptors = int(state.get_resource(MP))
+            for _ in range(max_interceptors):
+                if state.can_spawn(INTERCEPTOR, interceptor_spawn):
+                    state.attempt_spawn(INTERCEPTOR, interceptor_spawn)
+            return
 
     def should_attack(self, state: GameState):
         mp = state.get_resource(MP)
