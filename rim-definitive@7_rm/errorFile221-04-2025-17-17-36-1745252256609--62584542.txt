@@ -1,0 +1,12 @@
+Random seed: 8562672418094507936
+---------------- Starting Your Algo --------------------
+Turn 0
+Traceback (most recent call last):
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/rim-definitive@7/algo_strategy.py", line 733, in <module>
+    AlgoStrategy().start()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/rim-definitive@7/gamelib/algocore.py", line 59, in start
+    game_state_string = get_command()
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/rim-definitive@7/gamelib/util.py", line 12, in get_command
+    ret = sys.stdin.readline()
+KeyboardInterrupt
