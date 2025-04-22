@@ -1,0 +1,151 @@
+Random seed: 3150393457227567543
+---------------- Starting Your Algo --------------------
+Turn 0
+Switched to funnel defense
+Turn 0: Not enough SP to improve defense
+Turn 1
+Turn 1 Resource Evolution:
+Enemy SP: 5.0, MP: 8.8
+Enemy SP Trend: Decreasing
+Enemy MP Trend: Increasing
+Turn 1: Not enough SP to improve defense
+Opponent scored at [15, 1]
+Opponent scored at [15, 1]
+Opponent scored at [15, 1]
+Opponent scored at [15, 1]
+Turn 2
+Turn 2 Resource Evolution:
+Enemy SP: 9.0, MP: 5.6
+Enemy SP Trend: Increasing
+Enemy MP Trend: Decreasing
+Turn 2: Failed to improve funnel defense
+Turn 2: Managing support funnel
+Turn 3
+Turn 3 Resource Evolution:
+Enemy SP: 6.1, MP: 5.5
+Enemy SP Trend: Decreasing
+Enemy MP Trend: Decreasing
+Turn 3: Failed to improve funnel defense
+Turn 3: Not enough SP to manage support funnel
+Turn 4
+Turn 4 Resource Evolution:
+Enemy SP: 8.1, MP: 5.4
+Enemy SP Trend: Increasing
+Enemy MP Trend: Decreasing
+Turn 4: Failed to improve funnel defense
+Turn 4: Not enough SP to manage support funnel
+Turn 5
+Turn 5 Resource Evolution:
+Enemy SP: 6.1, MP: 5.3
+Enemy SP Trend: Decreasing
+Enemy MP Trend: Decreasing
+Turn 5: Failed to improve funnel defense
+Turn 5: Managing support funnel
+Turn 6
+Turn 6 Resource Evolution:
+Enemy SP: 8.1, MP: 5.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Decreasing
+Turn 6: Not enough SP to improve defense
+Turn 7
+Turn 7 Resource Evolution:
+Enemy SP: 5.1, MP: 5.2
+Enemy SP Trend: Decreasing
+Enemy MP Trend: Stable
+Turn 7: Failed to improve funnel defense
+Turn 7: Managing support funnel
+Turn 8
+Turn 8 Resource Evolution:
+Enemy SP: 7.3, MP: 5.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 8: Failed to improve funnel defense
+Turn 8: Managing support funnel
+Turn 9
+Turn 9 Resource Evolution:
+Enemy SP: 7.3, MP: 5.2
+Enemy SP Trend: Stable
+Enemy MP Trend: Stable
+Turn 9: Failed to improve funnel defense
+Turn 9: Managing support funnel
+Turn 10
+Turn 10 Resource Evolution:
+Enemy SP: 8.3, MP: 6.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Increasing
+Turn 10: Failed to improve funnel defense
+Turn 10: Managing support funnel
+Turn 11
+Turn 11 Resource Evolution:
+Enemy SP: 9.3, MP: 6.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 11: Failed to improve funnel defense
+Turn 11: Managing support funnel
+Turn 12
+Turn 12 Resource Evolution:
+Enemy SP: 10.3, MP: 6.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 12: Failed to improve funnel defense
+Turn 12: Managing support funnel
+Turn 13
+Turn 13 Resource Evolution:
+Enemy SP: 11.3, MP: 6.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 13: Failed to improve funnel defense
+Turn 13: Managing support funnel
+Turn 14
+Turn 14 Resource Evolution:
+Enemy SP: 12.3, MP: 6.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 14: Failed to improve funnel defense
+Turn 14: Managing support funnel
+Turn 15
+Turn 15 Resource Evolution:
+Enemy SP: 13.3, MP: 6.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 15: Failed to improve funnel defense
+Turn 15: Managing support funnel
+Turn 16
+Turn 16 Resource Evolution:
+Enemy SP: 14.3, MP: 6.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 16: Failed to improve funnel defense
+Turn 16: Managing support funnel
+Traceback (most recent call last):
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/algo_strategy.py", line 842, in <module>
+    AlgoStrategy().start()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/gamelib/algocore.py", line 74, in start
+    self.on_turn(game_state_string)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/algo_strategy.py", line 113, in on_turn
+    self.attack_1(state)
+    ~~~~~~~~~~~~~^^^^^^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/algo_strategy.py", line 582, in attack_1
+    should_attack, location, num_scouts = self.should_attack(state)
+                                          ~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/algo_strategy.py", line 596, in should_attack
+    loc, survived = self.full_sim(state, scouts)
+                    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/algo_strategy.py", line 623, in full_sim
+    survive, _, _, _, _, _, atk = self._simulate_path(
+                                  ~~~~~~~~~~~~~~~~~~~^
+        state, loc, num_scouts)
+        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/algo_strategy.py", line 649, in _simulate_path
+    atkers = temp.get_attackers(pt, 0)
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/gamelib/game_state.py", line 642, in get_attackers
+    possible_locations= self.game_map.get_locations_in_range(location, max_range)
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/gamelib/game_map.py", line 215, in get_locations_in_range
+    if self.in_arena_bounds(new_location) and self.distance_between_locations(location, new_location) < radius + getHitRadius:
+                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/gamelib/game_map.py", line 219, in distance_between_locations
+    def distance_between_locations(self, location_1, location_2):
+    
+KeyboardInterrupt

@@ -161,9 +161,10 @@ class AlgoStrategy(gamelib.AlgoCore):
                 gamelib.debug_write(f"Resort side: {self.resort_side}")
             
             # 1) Compute MP threshold for 3 interceptors + 7 scouts
+            minscouts = min(state.enemy_health, 7)
             _, int_cost   = state.type_cost(INTERCEPTOR)  # returns [sp, mp]
             _, scout_cost = state.type_cost(SCOUT)
-            threshold = 3 * int_cost + 7 * scout_cost
+            threshold = 3 * int_cost + minscouts * scout_cost
             mp = state.get_resource(MP)
 
             # 2) If we can afford the wave
@@ -521,7 +522,7 @@ class AlgoStrategy(gamelib.AlgoCore):
                 state.attempt_spawn(TURRET, loc)
             if upd:
                 unit = state.contains_stationary_unit(loc)
-                if unit and unit.unit_type == WALL and not unit.upgraded:
+                if unit and unit.unit_type == TURRET and not unit.upgraded:
                     state.attempt_upgrade(loc)
 
     # ------------------------

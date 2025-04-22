@@ -1,0 +1,440 @@
+Random seed: 1431813663012707500
+---------------- Starting Your Algo --------------------
+Turn 0
+Switched to funnel defense
+Turn 0: Not enough SP to improve defense
+Turn 1
+Turn 1 Resource Evolution:
+Enemy SP: 5.0, MP: 8.8
+Enemy SP Trend: Decreasing
+Enemy MP Trend: Increasing
+Turn 1: Not enough SP to improve defense
+Opponent scored at [15, 1]
+Opponent scored at [15, 1]
+Opponent scored at [15, 1]
+Opponent scored at [15, 1]
+Turn 2
+Turn 2 Resource Evolution:
+Enemy SP: 9.0, MP: 5.6
+Enemy SP Trend: Increasing
+Enemy MP Trend: Decreasing
+Turn 2: Failed to improve funnel defense
+Turn 2: Managing support funnel
+Turn 3
+Turn 3 Resource Evolution:
+Enemy SP: 6.1, MP: 5.5
+Enemy SP Trend: Decreasing
+Enemy MP Trend: Decreasing
+Turn 3: Failed to improve funnel defense
+Turn 3: Not enough SP to manage support funnel
+Turn 4
+Turn 4 Resource Evolution:
+Enemy SP: 8.1, MP: 5.4
+Enemy SP Trend: Increasing
+Enemy MP Trend: Decreasing
+Turn 4: Failed to improve funnel defense
+Turn 4: Not enough SP to manage support funnel
+Turn 5
+Turn 5 Resource Evolution:
+Enemy SP: 6.1, MP: 5.3
+Enemy SP Trend: Decreasing
+Enemy MP Trend: Decreasing
+Turn 5: Failed to improve funnel defense
+Turn 5: Managing support funnel
+Turn 6
+Turn 6 Resource Evolution:
+Enemy SP: 8.1, MP: 5.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Decreasing
+Turn 6: Not enough SP to improve defense
+Turn 7
+Turn 7 Resource Evolution:
+Enemy SP: 5.1, MP: 5.2
+Enemy SP Trend: Decreasing
+Enemy MP Trend: Stable
+Turn 7: Failed to improve funnel defense
+Turn 7: Managing support funnel
+Turn 8
+Turn 8 Resource Evolution:
+Enemy SP: 7.3, MP: 5.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 8: Failed to improve funnel defense
+Turn 8: Managing support funnel
+Turn 9
+Turn 9 Resource Evolution:
+Enemy SP: 7.3, MP: 5.2
+Enemy SP Trend: Stable
+Enemy MP Trend: Stable
+Turn 9: Failed to improve funnel defense
+Turn 9: Managing support funnel
+Turn 10
+Turn 10 Resource Evolution:
+Enemy SP: 8.3, MP: 6.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Increasing
+Turn 10: Failed to improve funnel defense
+Turn 10: Managing support funnel
+Turn 11
+Turn 11 Resource Evolution:
+Enemy SP: 9.3, MP: 6.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 11: Failed to improve funnel defense
+Turn 11: Managing support funnel
+Turn 12
+Turn 12 Resource Evolution:
+Enemy SP: 10.3, MP: 6.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 12: Failed to improve funnel defense
+Turn 12: Managing support funnel
+Turn 13
+Turn 13 Resource Evolution:
+Enemy SP: 11.3, MP: 6.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 13: Failed to improve funnel defense
+Turn 13: Managing support funnel
+Turn 14
+Turn 14 Resource Evolution:
+Enemy SP: 12.3, MP: 6.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 14: Failed to improve funnel defense
+Turn 14: Managing support funnel
+Turn 15
+Turn 15 Resource Evolution:
+Enemy SP: 13.3, MP: 6.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 15: Failed to improve funnel defense
+Turn 15: Managing support funnel
+Turn 16
+Turn 16 Resource Evolution:
+Enemy SP: 14.3, MP: 6.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 16: Failed to improve funnel defense
+Turn 16: Managing support funnel
+Turn 17
+Turn 17 Resource Evolution:
+Enemy SP: 15.3, MP: 6.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 17: Failed to improve funnel defense
+Turn 17: Managing support funnel
+Turn 18
+Turn 18 Resource Evolution:
+Enemy SP: 16.3, MP: 6.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 18: Failed to improve funnel defense
+Turn 18: Managing support funnel
+Turn 19
+Turn 19 Resource Evolution:
+Enemy SP: 17.3, MP: 6.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 19: Failed to improve funnel defense
+Turn 19: Managing support funnel
+Turn 20
+Turn 20 Resource Evolution:
+Enemy SP: 18.3, MP: 7.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Increasing
+Turn 20: Failed to improve funnel defense
+Turn 20: Managing support funnel
+Turn 21
+Turn 21 Resource Evolution:
+Enemy SP: 23.3, MP: 7.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 21: Failed to improve funnel defense
+Turn 21: Managing support funnel
+Turn 22
+Turn 22 Resource Evolution:
+Enemy SP: 28.3, MP: 7.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 22: Failed to improve funnel defense
+Turn 22: Managing support funnel
+Turn 23
+Turn 23 Resource Evolution:
+Enemy SP: 33.3, MP: 7.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 23: Failed to improve funnel defense
+Turn 23: Managing support funnel
+Turn 24
+Turn 24 Resource Evolution:
+Enemy SP: 38.3, MP: 7.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 24: Failed to improve funnel defense
+Turn 24: Managing support funnel
+Turn 25
+Turn 25 Resource Evolution:
+Enemy SP: 43.3, MP: 7.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 25: Failed to improve funnel defense
+Turn 25: Managing support funnel
+Turn 26
+Turn 26 Resource Evolution:
+Enemy SP: 48.3, MP: 7.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 26: Failed to improve funnel defense
+Turn 26: Managing support funnel
+Turn 27
+Turn 27 Resource Evolution:
+Enemy SP: 53.3, MP: 7.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 27: Failed to improve funnel defense
+Turn 27: Managing support funnel
+Turn 28
+Turn 28 Resource Evolution:
+Enemy SP: 58.3, MP: 7.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 28: Failed to improve funnel defense
+Turn 28: Managing support funnel
+Turn 29
+Turn 29 Resource Evolution:
+Enemy SP: 63.3, MP: 7.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 29: Failed to improve funnel defense
+Turn 29: Managing support funnel
+Turn 30
+Turn 30 Resource Evolution:
+Enemy SP: 68.3, MP: 8.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Increasing
+Turn 30: Failed to improve funnel defense
+Turn 30: Managing support funnel
+Turn 31
+Turn 31 Resource Evolution:
+Enemy SP: 73.3, MP: 8.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 31: Failed to improve funnel defense
+Turn 31: Managing support funnel
+Turn 32
+Turn 32 Resource Evolution:
+Enemy SP: 78.3, MP: 8.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 32: Failed to improve funnel defense
+Turn 32: Managing support funnel
+Turn 33
+Turn 33 Resource Evolution:
+Enemy SP: 83.3, MP: 8.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 33: Failed to improve funnel defense
+Turn 33: Managing support funnel
+Turn 34
+Turn 34 Resource Evolution:
+Enemy SP: 88.3, MP: 8.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 34: Failed to improve funnel defense
+Turn 34: Managing support funnel
+Turn 35
+Turn 35 Resource Evolution:
+Enemy SP: 93.3, MP: 8.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 35: Failed to improve funnel defense
+Turn 35: Managing support funnel
+Turn 36
+Turn 36 Resource Evolution:
+Enemy SP: 98.3, MP: 8.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 36: Failed to improve funnel defense
+Turn 36: Managing support funnel
+Turn 37
+Turn 37 Resource Evolution:
+Enemy SP: 103.3, MP: 8.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 37: Failed to improve funnel defense
+Turn 37: Managing support funnel
+Turn 38
+Turn 38 Resource Evolution:
+Enemy SP: 108.3, MP: 8.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 38: Failed to improve funnel defense
+Turn 38: Managing support funnel
+Turn 39
+Turn 39 Resource Evolution:
+Enemy SP: 113.3, MP: 8.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 39: Failed to improve funnel defense
+Turn 39: Managing support funnel
+Turn 40
+Turn 40 Resource Evolution:
+Enemy SP: 118.3, MP: 9.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Increasing
+Turn 40: Failed to improve funnel defense
+Turn 40: Managing support funnel
+Turn 41
+Turn 41 Resource Evolution:
+Enemy SP: 123.3, MP: 9.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 41: Failed to improve funnel defense
+Turn 41: Managing support funnel
+Turn 42
+Turn 42 Resource Evolution:
+Enemy SP: 128.3, MP: 9.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 42: Failed to improve funnel defense
+Turn 42: Managing support funnel
+Turn 43
+Turn 43 Resource Evolution:
+Enemy SP: 133.3, MP: 9.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 43: Failed to improve funnel defense
+Turn 43: Managing support funnel
+Turn 44
+Turn 44 Resource Evolution:
+Enemy SP: 138.3, MP: 9.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 44: Failed to improve funnel defense
+Turn 44: Managing support funnel
+Turn 45
+Turn 45 Resource Evolution:
+Enemy SP: 143.3, MP: 9.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 45: Failed to improve funnel defense
+Turn 45: Managing support funnel
+Turn 46
+Turn 46 Resource Evolution:
+Enemy SP: 148.3, MP: 9.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 46: Failed to improve funnel defense
+Turn 46: Managing support funnel
+Turn 47
+Turn 47 Resource Evolution:
+Enemy SP: 153.3, MP: 9.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 47: Failed to improve funnel defense
+Turn 47: Managing support funnel
+Turn 48
+Turn 48 Resource Evolution:
+Enemy SP: 158.3, MP: 9.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 48: Failed to improve funnel defense
+Turn 48: Managing support funnel
+Turn 49
+Turn 49 Resource Evolution:
+Enemy SP: 163.3, MP: 9.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 49: Failed to improve funnel defense
+Turn 49: Managing support funnel
+Turn 50
+Turn 50 Resource Evolution:
+Enemy SP: 168.3, MP: 10.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Increasing
+Turn 50: Failed to improve funnel defense
+Turn 50: Managing support funnel
+Turn 51
+Turn 51 Resource Evolution:
+Enemy SP: 173.3, MP: 10.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 51: Failed to improve funnel defense
+Turn 51: Managing support funnel
+Turn 52
+Turn 52 Resource Evolution:
+Enemy SP: 178.3, MP: 10.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 52: Failed to improve funnel defense
+Turn 52: Managing support funnel
+Turn 53
+Turn 53 Resource Evolution:
+Enemy SP: 183.3, MP: 10.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 53: Failed to improve funnel defense
+Turn 53: Managing support funnel
+Turn 54
+Turn 54 Resource Evolution:
+Enemy SP: 188.3, MP: 10.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 54: Failed to improve funnel defense
+Turn 54: Managing support funnel
+Turn 55
+Turn 55 Resource Evolution:
+Enemy SP: 193.3, MP: 10.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 55: Failed to improve funnel defense
+Turn 55: Managing support funnel
+Turn 56
+Turn 56 Resource Evolution:
+Enemy SP: 198.3, MP: 10.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 56: Failed to improve funnel defense
+Turn 56: Managing support funnel
+Turn 57
+Turn 57 Resource Evolution:
+Enemy SP: 203.3, MP: 10.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 57: Failed to improve funnel defense
+Turn 57: Managing support funnel
+Turn 58
+Turn 58 Resource Evolution:
+Enemy SP: 208.3, MP: 10.2
+Enemy SP Trend: Increasing
+Enemy MP Trend: Stable
+Turn 58: Failed to improve funnel defense
+Turn 58: Managing support funnel
+Traceback (most recent call last):
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/algo_strategy.py", line 842, in <module>
+    if __name__ == "__main__":
+        ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/gamelib/algocore.py", line 74, in start
+    self.on_turn(game_state_string)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/algo_strategy.py", line 113, in on_turn
+    self.attack_1(state)
+    ~~~~~~~~~~~~~^^^^^^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/algo_strategy.py", line 582, in attack_1
+    # Default: Run scout attack if conditions are met
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/algo_strategy.py", line 596, in should_attack
+    scouts = int(mp)
+    
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/algo_strategy.py", line 623, in full_sim
+    state = copy.deepcopy(orig_state)
+                                  ^^^
+    survive, _, _, _, _, _, atk = self._simulate_path(
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/algo_strategy.py", line 649, in _simulate_path
+    pt = path[idx]
+             ^^^^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive_f_rm/gamelib/game_state.py", line 644, in get_attackers
+    for unit in self.game_map[location_unit]:
+                ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+KeyboardInterrupt
