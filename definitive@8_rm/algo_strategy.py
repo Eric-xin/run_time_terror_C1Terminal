@@ -201,7 +201,7 @@ class AlgoStrategy(gamelib.AlgoCore):
                 self.resort_side = self.evaluate_enemy_defense(state)
                 gamelib.debug_write(f"Resort side: {self.resort_side}")
 
-            if self.is_funnel:
+            if self.funnelmode:
                 self.funnel_strategy()
 
 
