@@ -1,0 +1,931 @@
+Random seed: 7002202369821650314
+---------------- Starting Your Algo --------------------
+Turn 0
+Turn 1
+Opponent breached at (25, 11) on turn 1
+Opponent breached at (25, 11) on turn 1
+Turn 2
+Turn 3
+Enemy defense weighted L=21.0, R=26.0
+Resort side: l
+Turn 4
+Turn 5
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+Turn 6
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+Turn 7
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+Turn 8
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+Turn 9
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+Turn 10
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+checking 15, 11
+checking 16, 11
+checking 17, 11
+checking 18, 11
+checking 19, 11
+checking 20, 11
+checking 21, 11
+checking 22, 11
+checking 23, 11
+checking 24, 11
+about to do priority upgrades
+Turn 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+checking 3, 11
+checking 4, 11
+checking 5, 11
+checking 6, 11
+checking 7, 11
+checking 8, 11
+checking 9, 11
+checking 10, 11
+checking 11, 11
+checking 12, 11
+checking 13, 11
+checking 15, 11
+checking 16, 11
+checking 17, 11
+checking 18, 11
+checking 19, 11
+checking 20, 11
+checking 21, 11
+checking 22, 11
+checking 23, 11
+checking 24, 11
+about to do priority upgrades
+Traceback (most recent call last):
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive@8/algo_strategy.py", line 860, in <module>
+    AlgoStrategy().start()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive@8/gamelib/algocore.py", line 59, in start
+    game_state_string = get_command()
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive@8/gamelib/util.py", line 12, in get_command
+    ret = sys.stdin.readline()
+KeyboardInterrupt

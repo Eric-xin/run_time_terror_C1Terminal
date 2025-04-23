@@ -1,0 +1,322 @@
+Random seed: 817515924020230381
+---------------- Starting Your Algo --------------------
+Turn 0
+Turn 1
+Opponent breached at (25, 11) on turn 1
+Opponent breached at (25, 11) on turn 1
+Turn 2
+Turn 3
+Enemy defense weighted L=21.0, R=26.0
+Resort side: l
+Turn 4
+Turn 5
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+Turn 6
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+Turn 7
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+Turn 8
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+Turn 9
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+Turn 10
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to do priority upgrades
+Turn 11
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to do priority upgrades
+Turn 12
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+Turn 13
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+about to upgrade walls
+about to add vertical walls
+about to do initial line
+Traceback (most recent call last):
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive@8/algo_strategy.py", line 859, in <module>
+    AlgoStrategy().start()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive@8/gamelib/algocore.py", line 74, in start
+    self.on_turn(game_state_string)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive@8/algo_strategy.py", line 187, in on_turn
+    attack, loc, num = self.should_attack(state)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive@8/algo_strategy.py", line 586, in should_attack
+    loc, survived = self.full_sim(state, scouts)
+                    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ron0/development/python/run_time_terror_C1Terminal/definitive@8/algo_strategy.py", line 612, in full_sim
+    state = copy.deepcopy(orig_state)
+  File "/usr/lib/python3.13/copy.py", line 163, in deepcopy
+    y = _reconstruct(x, memo, *rv)
+  File "/usr/lib/python3.13/copy.py", line 260, in _reconstruct
+    state = deepcopy(state, memo)
+  File "/usr/lib/python3.13/copy.py", line 137, in deepcopy
+    y = copier(x, memo)
+  File "/usr/lib/python3.13/copy.py", line 222, in _deepcopy_dict
+    y[deepcopy(key, memo)] = deepcopy(value, memo)
+                             ~~~~~~~~^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/copy.py", line 163, in deepcopy
+    y = _reconstruct(x, memo, *rv)
+  File "/usr/lib/python3.13/copy.py", line 260, in _reconstruct
+    state = deepcopy(state, memo)
+  File "/usr/lib/python3.13/copy.py", line 137, in deepcopy
+    y = copier(x, memo)
+  File "/usr/lib/python3.13/copy.py", line 222, in _deepcopy_dict
+    y[deepcopy(key, memo)] = deepcopy(value, memo)
+                             ~~~~~~~~^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/copy.py", line 137, in deepcopy
+    y = copier(x, memo)
+  File "/usr/lib/python3.13/copy.py", line 197, in _deepcopy_list
+    append(deepcopy(a, memo))
+           ~~~~~~~~^^^^^^^^^
+  File "/usr/lib/python3.13/copy.py", line 137, in deepcopy
+    y = copier(x, memo)
+  File "/usr/lib/python3.13/copy.py", line 197, in _deepcopy_list
+    append(deepcopy(a, memo))
+           ~~~~~~~~^^^^^^^^^
+  File "/usr/lib/python3.13/copy.py", line 137, in deepcopy
+    y = copier(x, memo)
+  File "/usr/lib/python3.13/copy.py", line 197, in _deepcopy_list
+    append(deepcopy(a, memo))
+           ~~~~~~~~^^^^^^^^^
+  File "/usr/lib/python3.13/copy.py", line 163, in deepcopy
+    y = _reconstruct(x, memo, *rv)
+  File "/usr/lib/python3.13/copy.py", line 260, in _reconstruct
+    state = deepcopy(state, memo)
+  File "/usr/lib/python3.13/copy.py", line 137, in deepcopy
+    y = copier(x, memo)
+  File "/usr/lib/python3.13/copy.py", line 222, in _deepcopy_dict
+    y[deepcopy(key, memo)] = deepcopy(value, memo)
+                             ~~~~~~~~^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/copy.py", line 137, in deepcopy
+    y = copier(x, memo)
+  File "/usr/lib/python3.13/copy.py", line 173, in _deepcopy_atomic
+    def _deepcopy_atomic(x, memo):
+    
+KeyboardInterrupt
