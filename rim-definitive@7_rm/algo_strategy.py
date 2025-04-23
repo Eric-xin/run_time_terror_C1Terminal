@@ -24,8 +24,8 @@ class AlgoStrategy(gamelib.AlgoCore):
         gamelib.debug_write(f"Random seed: {seed}")
 
         # Estimator
-        estimator = ThresholdEstimator(100, 9) # 9-10 MP spend is reasonable for a large attack
-        opp_threshold = None # if None then esimate needs time to converge
+        self.estimator = ThresholdEstimator(100, 9) # 9-10 MP spend is reasonable for a large attack
+        self.opp_threshold = None # if None then esimate needs time to converge
 
         # State
         self.support_locations = []
@@ -133,9 +133,11 @@ class AlgoStrategy(gamelib.AlgoCore):
 
         # avoid adding initial spending to threshold predictor
         if state.turn_number >= 3:
-            self.predictor.observe(state.get_resources(1)[1])
-            if self.predictor.confidence_width() <= 3:
-                self.opp_threshold = self.predictor.threshold()
+            self.estimator.observe(state.get_resources(1)[1])
+
+            gamelib.debug_write(f"Confidence interval: {self.estimator.confidence_interval()}")
+            if self.estimator.confidence_width() <= 3:
+                self.opp_threshold = self.estimator.threshold()
             else:
                 self.opp_threshold = None
 
