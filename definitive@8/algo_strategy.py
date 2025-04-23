@@ -171,6 +171,8 @@ class AlgoStrategy(gamelib.AlgoCore):
         # --- Offense ---
         if state.turn_number <= 2:
             self._interceptors_defense(state)
+            self._build_far_side_walls(state, upd=False)
+            self._initial_defense(state, turrets=False, notch=False)
         else:
             if state.turn_number == 3:
                 self._build_far_side_walls(state, upd=True)
@@ -179,8 +181,8 @@ class AlgoStrategy(gamelib.AlgoCore):
             else:
                 self._replace_defense(state)
 
-            if state.get_resources(1)[0] < 10 and (self.isfunnel is None):
-                self.isfunnel = self.is_funnel(state)
+            if state.get_resources(1)[0] < 10 and (self.funnelmode is None):
+                self.funnelmode = self.is_funnel(state)
 
             self.estimator.observe(state.get_resources(1)[1])
             if self.estimator.confidence_width() <= 3:
@@ -229,19 +231,20 @@ class AlgoStrategy(gamelib.AlgoCore):
     # ------------------------
     # Initial defense
     # ------------------------
-    def _initial_defense(self, state: GameState, turrets: bool):
+    def _initial_defense(self, state: GameState, turrets: bool, notch: bool = True):
         """Basic turret + wall setup on turn 0."""
         # state.attempt_upgrade(self.start_points) # No upgrade of turrets based on the current rule
         # walls = [[x, y + 1] for x, y in self.start_points]
         state.attempt_spawn(WALL, self.start_points)
-        state.attempt_spawn(WALL, self.notch_points)
+        if notch:
+            state.attempt_spawn(WALL, self.notch_points)
         if turrets:
             state.attempt_spawn(TURRET, self.turrets_start_points)
-        for loc in self.turrets_start_points:
-            loc = [loc[0], loc[1] + 1]
-            unit = state.contains_stationary_unit(loc)
-            if unit and unit.unit_type == WALL and not unit.upgraded:
-                state.attempt_upgrade(loc)
+            for loc in self.turrets_start_points:
+                loc = [loc[0], loc[1] + 1]
+                unit = state.contains_stationary_unit(loc)
+                if unit and unit.unit_type == WALL and not unit.upgraded:
+                    state.attempt_upgrade(loc)
 
     # ------------------------
     # Defense improvement
