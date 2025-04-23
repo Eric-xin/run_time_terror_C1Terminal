@@ -5,6 +5,7 @@ import copy
 import json
 from sys import maxsize
 from gamelib import GameState, GameMap, GameUnit
+from threshold import ThresholdEstimator
 
 # Shorthand constants set in on_game_start
 WALL = SUPPORT = TURRET = SCOUT = DEMOLISHER = INTERCEPTOR = None
@@ -21,12 +22,16 @@ class AlgoStrategy(gamelib.AlgoCore):
         seed = random.randrange(maxsize)
         random.seed(seed)
         gamelib.debug_write(f"Random seed: {seed}")
+
+        # Estimator
+        estimator = ThresholdEstimator(100, 9) # 9-10 MP spend is reasonable for a large attack
+        opp_threshold = None # if None then esimate needs time to converge
+
         # State
         self.support_locations = []
         self.scored_on = []
         self.sectors = []
         self.start_points = []
-        self.last_damage = 0
 
         # turn number
         self.last_turn = 0
@@ -126,6 +131,14 @@ class AlgoStrategy(gamelib.AlgoCore):
         # Update turn number
         self.last_turn = state.turn_number
 
+        # avoid adding initial spending to threshold predictor
+        if state.turn_number >= 3:
+            self.predictor.observe(state.get_resources(1)[1])
+            if self.predictor.confidence_width() <= 3:
+                self.opp_threshold = self.predictor.threshold()
+            else:
+                self.opp_threshold = None
+
         # --- Check for last resort ---
         if state.turn_number >= 5:
             self.resort = True
@@ -141,8 +154,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         elif not self.resort:
             attack, loc, num = self.should_attack(state)
             if attack:
-                self._interceptors_defense(state)
-                #self.scout_attack(state, loc, num)
+                self.scout_attack(state, loc, num)
 
         # --- Defense improvements ---
         max_improvements = 15
@@ -151,7 +163,7 @@ class AlgoStrategy(gamelib.AlgoCore):
                 break
             if not self._try_improve_defense(state):
                 break
-        
+
         # --- Far-side walls | RESORT SECOND ---
         if self.resort:
             # If side is not set, choose the side with less enemy defense
@@ -159,12 +171,11 @@ class AlgoStrategy(gamelib.AlgoCore):
                 self.resort_side = self.evaluate_enemy_defense(state)
                 self.wallresnd_bp = self.wallresnd_bp_r if self.resort_side == 'l' else self.wallresnd_bp_l
                 gamelib.debug_write(f"Resort side: {self.resort_side}")
-            
+
             # 1) Compute MP threshold for 3 interceptors + 7 scouts
-            minscouts = min(state.enemy_health, 7)
             _, int_cost   = state.type_cost(INTERCEPTOR)  # returns [sp, mp]
             _, scout_cost = state.type_cost(SCOUT)
-            threshold = 3 * int_cost + minscouts * scout_cost
+            threshold = 3 * int_cost + 7 * scout_cost
             mp = state.get_resource(MP)
 
             # 2) If we can afford the wave
@@ -203,7 +214,6 @@ class AlgoStrategy(gamelib.AlgoCore):
         # --- Support management ---
         self._manage_support(state, loc if 'loc' in locals() else None)
 
-        self.last_damage = 0
         state.submit_turn()
 
     def on_action_frame(self, turn_str):
@@ -218,7 +228,6 @@ class AlgoStrategy(gamelib.AlgoCore):
                     "turn": self.last_turn  # we'll set last_turn in on_turn
                 })
                 gamelib.debug_write(f"Opponent breached at {loc} on turn {self.last_turn}")
-                self.last_damage += 1
 
     # ------------------------
     # Initial defense
@@ -282,7 +291,7 @@ class AlgoStrategy(gamelib.AlgoCore):
             if val < best_v:
                 best_v, best_i = val, i
         return best_i
-    
+
     def evaluate_enemy_defense(self, state: GameState) -> str:
         """
         Scan all stationary enemy WALLs and TURRETs (upgraded or not) on the opponent's side (y >= 14),
@@ -437,7 +446,7 @@ class AlgoStrategy(gamelib.AlgoCore):
             if not state.contains_stationary_unit(pos):
                 return state.attempt_spawn(WALL, pos)
         return False
-    
+
     # ------------------------
     # Interoceptors defense
     # ------------------------
@@ -519,10 +528,10 @@ class AlgoStrategy(gamelib.AlgoCore):
         # 2) Build and upgrade walls at the remaining spots
         for loc in spots:
             if state.can_spawn(WALL, loc):
-                state.attempt_spawn(TURRET, loc)
+                state.attempt_spawn(WALL, loc)
             if upd:
                 unit = state.contains_stationary_unit(loc)
-                if unit and unit.unit_type == TURRET and not unit.upgraded:
+                if unit and unit.unit_type == WALL and not unit.upgraded:
                     state.attempt_upgrade(loc)
 
     # ------------------------

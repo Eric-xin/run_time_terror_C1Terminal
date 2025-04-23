@@ -1,5 +1,5 @@
 class ThresholdEstimator:
-    def __init__(self, initial_max_mana: int, D_min: int = 9):
+    def __init__(self, initial_max_mana: float, D_min: float = 9):
         """
         Estimates the opponent's mana threshold for a big attack,
         using only start-of-turn mana observations.
@@ -14,7 +14,7 @@ class ThresholdEstimator:
         self.D_min = D_min
         self.last_mana = None  # previous turn's post-action mana
 
-    def observe(self, current_mana: int) -> None:
+    def observe(self, current_mana: float) -> None:
         """
         Update interval bounds given a new mana observation.
 
@@ -37,17 +37,23 @@ class ThresholdEstimator:
         # Store for next observation
         self.last_mana = current_mana
 
-    def threshold(self) -> int:
+    def threshold(self) -> float:
         """
         Returns the current upper-bound estimate of the opponent's threshold.
         """
-        return self.U
+        return round((self.U + self.L) / 2, 1)
 
-    def confidence_interval(self) -> tuple[int, int]:
+    def confidence_interval(self) -> tuple[float, float]:
         """
         Returns the current (L, U] interval for the threshold.
         """
         return (self.L, self.U)
+
+    def confidence_width(self) -> float:
+        """
+        Returns the current width of the confidence interval for the threshold.
+        """
+        return self.U - self.L
 
 
 if __name__ == "__main__":
