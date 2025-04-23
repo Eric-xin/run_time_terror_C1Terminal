@@ -29,6 +29,7 @@ class AlgoStrategy(gamelib.AlgoCore):
 
         # State
         self.support_locations = []
+        self.support_locations_plan = []
         self.scored_on = []
         self.sectors = []
         self.start_points = []
@@ -136,6 +137,8 @@ class AlgoStrategy(gamelib.AlgoCore):
             [24,12], [24,11], [23,11], [23,10], [22,10], [22,9],
             [25,12], [25,11], [24, 10], [23,9], [26,12], [21,9],
         ]
+        
+        self.support_locations_plan = [[11,4], [12,4], [13,4], [14,4], [15,4], [16,4], [12,3], [13,3], [14,3], [15,3]]
 
         # walls for resort third
         self.wallresrd = [[6,9], [7,9], [8,9], [9,9], [10,9], [11,9], [12,9], [13,9], [14,9], [15,9], [16,9], [17,9], [18,9], [19,9], [20,9], [21,9]]
@@ -262,8 +265,8 @@ class AlgoStrategy(gamelib.AlgoCore):
                 gamelib.debug_write(f"Resort side: {self.resort_side}")
 
         # --- Support management ---
-        attack, loc, num = self.should_attack(state)
-        self._manage_support(state, loc if 'loc' in locals() else None)
+        # attack, loc, num = self.should_attack(state)
+        self._manage_support(state)
 
         state.submit_turn()
 
@@ -829,29 +832,25 @@ class AlgoStrategy(gamelib.AlgoCore):
     # ------------------------
     # Support management
     # ------------------------
-    def _manage_support(self, state: GameState, scout_loc):
-        t = state.turn_number
-        if scout_loc and t >= 5:
-            path = state.find_path_to_edge(scout_loc)
-            rng = self.config["unitInformation"][1]["shieldRange"]
-            # prune
-            kept = []
-            for loc in self.support_locations:
-                unit = state.contains_stationary_unit(loc)
-                if unit and any(self.manhattan(loc, p) <= rng for p in path):
-                    kept.append(loc)
-                else:
-                    state.attempt_remove(loc)
-            self.support_locations = kept
-            # place new
-            for loc in state.game_map.get_locations_in_range(scout_loc, rng):
-                if loc not in kept and loc not in path and state.can_spawn(SUPPORT, loc):
-                    if state.attempt_spawn(SUPPORT, loc):
-                        self.support_locations.append(loc)
-                        state.attempt_upgrade(loc)
-        # upgrade all shields
-        for loc in list(self.support_locations):
-            state.attempt_upgrade(loc)
+    def _manage_support(self, state: GameState):
+        if state.turn_number >= 5:
+            new_cost = 0
+            for loc in self.support_locations_plan:
+                if len(self.support_locations)>=3:
+                    if not new_cost <= 4:
+                        if state.get_resource(MP) >= state.type_cost(SUPPORT)[1] + new_cost: # Save SP for potential turrets
+                            if state.can_spawn(SUPPORT, loc):
+                                state.attempt_spawn(SUPPORT, loc)
+                                self.support_locations.append(loc)
+                                state.attempt_upgrade(loc)
+                                new_cost += state.type_cost(SUPPORT)[1]
+                else: 
+                    if state.get_resource(MP) >= state.type_cost(SUPPORT)[1] + new_cost:
+                        if state.can_spawn(SUPPORT, loc):
+                            state.attempt_spawn(SUPPORT, loc)
+                            self.support_locations.append(loc)
+                            state.attempt_upgrade(loc)
+                            new_cost += state.type_cost(SUPPORT)[1]
 
     # ------------------------
     # Far-side walls
