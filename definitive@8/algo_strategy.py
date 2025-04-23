@@ -25,7 +25,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         gamelib.debug_write(f"Random seed: {seed}")
 
         self.estimator = ThresholdEstimator(100, 8)
-        self.opp_threshold = None
+        self.opp_threshold = 10
 
         # State
         self.support_locations = []
@@ -34,6 +34,8 @@ class AlgoStrategy(gamelib.AlgoCore):
         self.sectors = []
         self.start_points = []
         self.notch_points = []
+        self.notch_tip = []
+        self.build_turrets = []
         self.funnelmode = False
 
         # turn number
@@ -103,12 +105,16 @@ class AlgoStrategy(gamelib.AlgoCore):
         # self.start_points = [[3,12], [6,10], [9,10], [12,10], [15,10], [18,10], [21,10], [24,12]]
         # self.start_points = [[3,12], [4,12], [5,11], [6,10], [9,10], [12,10], [15,10], [18,10], [21,10], [23,11], [24,12]]
         self.start_points = [[3,11], [4,11], [5,11], [6,11], [7,11], [8,11], [9,11], [10,11], [11,11], [12,11], [16,11], [17,11], [18,11], [19,11], [20,11], [21,11], [22,11], [23,11], [24,11]]
-        self.turrets_start_points = [[12,10], [16,10], [10,10], [8,10], [18,10], [20,10]]
+        #self.turrets_start_points = [[12,10], [16,10], [10,10], [8,10], [18,10], [20,10]]
+        #self.turrets_start_points = [[12, 10], [16, 10], [10, 10], [8, 10], [18, 10], [20, 10], [7, 10], [21, 10],
+        #                             [9, 10], [19, 10], [6, 10], [22, 10]]
+        self.turrets_start_points = [[12, 10], [16, 10], [10, 10], [8, 10], [18, 10], [20, 10], [12, 9], [16, 9],
+                                     [12, 8], [16, 8], [12, 7], [16, 7]]
         self.interceptors_start_spawn_loc = [[8,5], [19,5]]
         # self.notch_points = [[13,11],[14,10],[15,11]]
         self.notch_points = [[13,11],[15,11]]
         self.notch_tip = [14,10]
-        
+
         # vertical wall
         self.vertical_wall_start_points = [[14,9], [14,8], [14,7], [14,6]]
 
@@ -167,7 +173,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         # # Monitor resources and unit health
         self._monitor_resources_and_units(state)
         
-        if self.monitoring_history[0]['health'] - self.monitoring_history[-1]['health'] > 13:
+        if self.monitoring_history[0]['health'] - self.monitoring_history[-1]['health'] > 13 and self.rim_evaluation(state):
             self.strong_attack = True
 
         # --- Check for last resort ---
@@ -182,27 +188,28 @@ class AlgoStrategy(gamelib.AlgoCore):
         # --- Offense ---
         if state.turn_number <= 2:
             self._interceptors_defense(state)
-            self._build_far_side_walls(state, upd=False)
+            self._build_far_side_walls(state, upd=True)
             self._initial_defense(state, turrets=False, notch=False)
         else:
             rim_attack = self.rim_evaluation(state)
+            blocked = self.is_completely_blocked(state)
             funnel_attack = self.is_funnel(state)
             keep_notch = True
 
-            gamelib.debug_write(f"opp threshold: {self.opp_threshold}, current resource: {state.get_resources(1)[1]}")
+            gamelib.debug_write(f"opp threshold: {self.opp_threshold}, current resource: {state.get_resources(1)[1]}  blocked: {blocked}")
             gamelib.debug_write(f"keep notch: {keep_notch}, rim attack: {rim_attack}, funnel attack: {funnel_attack}")
-            if self.opp_threshold and state.get_resources(1)[1] >= self.opp_threshold:
+            if state.get_resources(1)[1] >= self.opp_threshold:
                 # Opponent likely to attack - determine attack type
 
                 # gamelib.debug_write(f"Opponent MP: {state.get_resources(1)[1]}, Rim attack: {rim_attack}, Funnel attack: {funnel_attack}")
 
-                if rim_attack:
+                if not blocked:
                     # Defend against rim attack with interceptors at the edges
                     gamelib.debug_write("Detected rim attack strategy - deploying edge interceptors")
 
                     # keep spawining interceptors from [5,8] until we run out of MP
                     intercept_amt = state.get_resource(MP) // state.type_cost(INTERCEPTOR)[1]
-                    deploypoint = [5, 8] if rim_attack == 1 else [22, 8]
+                    deploypoint = [13, 0] if rim_attack == 1 else [14, 0]
 
                     for i in range(int(intercept_amt)):
                         if state.can_spawn(INTERCEPTOR, deploypoint):
@@ -211,16 +218,25 @@ class AlgoStrategy(gamelib.AlgoCore):
                     self._interceptors_defense(state)
 
             # opponent has low MP and is unlikely to attack
-            elif self.opp_threshold and state.get_resources(1)[1] < self.estimator.confidence_interval()[0]:
-                blocked = self.is_completely_blocked(state)
-                side = self.evaluate_enemy_defense(state)
-                deploypoint = [5, 8] if side == 'l' else [22, 8]
-                scoutamt = state.get_resource(MP) // state.type_cost(SCOUT)[1]
-                self.scout_attack(state, deploypoint, int(scoutamt))
-                keep_notch = False
+            elif state.get_resources(1)[1] < self.opp_threshold:
+                side = self.evaluate_enemy_defense(state, True)
+
+                if not blocked:
+                    deploypoint = [13, 0] if side == 'l' else [14, 0]
+                    scoutamt = state.get_resource(MP) // state.type_cost(SCOUT)[1]
+                    self.scout_attack(state, deploypoint, int(scoutamt))
+                    keep_notch = False
+                elif state.get_resource(MP) > 20: # too much MP, demolisher + interceptor attack
+                    deploypoint = [13, 0] if side == 'l' else [14, 0]
+
+                    state.attempt_spawn(DEMOLISHER, deploypoint, 3)
+
+                    scoutamt = state.get_resource(MP) // state.type_cost(SCOUT)[1]
+                    self.scout_attack(state, deploypoint, int(scoutamt))
+                    keep_notch = False
 
 
-            if keep_notch and not self.strong_attack:
+            if keep_notch:
                 # keep the notch open
                 if state.can_spawn(WALL, self.notch_tip):
                     state.attempt_spawn(WALL, self.notch_tip)
@@ -228,7 +244,7 @@ class AlgoStrategy(gamelib.AlgoCore):
                 state.attempt_remove(self.notch_tip)
 
             gamelib.debug_write(f"finished notch")
-            
+
             if state.turn_number == 3:
                 self._build_far_side_walls(state, upd=True)
                 if self.strong_attack:
@@ -249,7 +265,7 @@ class AlgoStrategy(gamelib.AlgoCore):
             if self.estimator.confidence_width() <= 3:
                 self.opp_threshold = self.estimator.threshold()
             else:
-                self.opp_threshold = None
+                self.opp_threshold = 10
 
             # # --- Defense improvements ---
             max_improvements = 20
@@ -349,7 +365,7 @@ class AlgoStrategy(gamelib.AlgoCore):
                 best_v, best_i = val, i
         return best_i
 
-    def evaluate_enemy_defense(self, state: GameState) -> str:
+    def evaluate_enemy_defense(self, state: GameState, onlyturret=False) -> str:
         """
         Scan all stationary enemy WALLs and TURRETs (upgraded or not) on the opponent's side (y >= 14),
         sum a weighted health total on left (x < 14) vs. right (x >= 14),
@@ -362,6 +378,15 @@ class AlgoStrategy(gamelib.AlgoCore):
             (TURRET, False): 2.0,  # basic turret
             (TURRET, True):  3.0   # upgraded turret
         }
+
+        if onlyturret:
+            WEIGHTS = {
+                (WALL, False): 0.0,  # basic wall
+                (WALL, True): 0.0,  # upgraded wall
+                (TURRET, False): 2.0,  # basic turret
+                (TURRET, True): 3.0  # upgraded turret
+            }
+
         totals = {'l': 0.0, 'r': 0.0}
 
         for x in range(28):
@@ -441,13 +466,12 @@ class AlgoStrategy(gamelib.AlgoCore):
             elif unit.health < 0.6 * unit.max_health:
                 state.attempt_remove(loc)
 
-        if notch:
-            for loc in self.notch_points:
-                unit = state.contains_stationary_unit(loc)
-                if not unit:
-                    state.attempt_spawn(WALL, loc)
-                elif unit.health < 0.6 * unit.max_health:
-                    state.attempt_remove(loc)
+        for loc in self.notch_points:
+            unit = state.contains_stationary_unit(loc)
+            if not unit:
+                state.attempt_spawn(WALL, loc)
+            elif unit.health < 0.6 * unit.max_health:
+                state.attempt_remove(loc)
 
         for loc in starts:
             unit = state.contains_stationary_unit(loc)
@@ -560,11 +584,21 @@ class AlgoStrategy(gamelib.AlgoCore):
             elif unit and unit.unit_type == WALL and not unit.upgraded:
                 state.attempt_upgrade(loc)
                 return True
+
+        build_turrets = 0
         for x, y in starts_turrets:
             turret = (x, y)
             if not state.contains_stationary_unit(turret) and state.can_spawn(TURRET, turret):
                 state.attempt_spawn(TURRET, turret)
+                build_turrets += 1
                 return True
+
+        if build_turrets == len(self.turrets_start_points):
+            for loc in starts_turrets:
+                unit = state.contains_stationary_unit(loc)
+                if unit and unit.unit_type == TURRET and not unit.upgraded:
+                    state.attempt_upgrade(loc)
+                    return True
 
         # 3) PRIORITY UPGRADES: upgrade units based on damage history
         priority_locations = self._get_priority_upgrade_locations(state)
@@ -837,7 +871,7 @@ class AlgoStrategy(gamelib.AlgoCore):
             new_cost = 0
             for loc in self.support_locations_plan:
                 if len(self.support_locations)>=3:
-                    if not new_cost <= 4:
+                    if not new_cost < 5:
                         if state.get_resource(MP) >= state.type_cost(SUPPORT)[1] + new_cost: # Save SP for potential turrets
                             if state.can_spawn(SUPPORT, loc):
                                 state.attempt_spawn(SUPPORT, loc)
