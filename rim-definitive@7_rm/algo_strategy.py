@@ -415,6 +415,56 @@ class AlgoStrategy(gamelib.AlgoCore):
         return False
 
 
+    def rim_evaluation(state: GameState) -> int:
+        """
+        Evaluates if there is a rim defense with at most 3 consecutive holes at one end.
+
+        Args:
+            state: The current game state
+
+        Returns:
+            1 if there's a rim with at most 3 consecutive holes in the right, -1 if left , 0 otherwise
+        """
+        holes = []
+
+        # Check for holes along the rim
+        for x in range(28):
+            has_structure = False
+            # Check from y=14 onwards in this column
+            for y in range(14, 28):
+                if state.game_map.in_arena_bounds([x, y]) and state.contains_stationary_unit([x, y]):
+                    has_structure = True
+                    break
+
+            # If no structure found in this column, it's a hole
+            if not has_structure:
+                holes.append(x)
+
+        # No holes means perfect rim
+        if not holes:
+            return 0
+
+        # Too many holes
+        if len(holes) > 3:
+            return 0
+
+        # Check if holes are consecutive (no gaps)
+        holes.sort()
+        for i in range(1, len(holes)):
+            if holes[i] != holes[i-1] + 1:
+                return 0  # Non-consecutive holes
+
+        # Check if holes are at left end (starting at x=0)
+        if holes[0] == 0:
+            return -1
+
+        # Check if holes are at right end (ending at x=27)
+        if holes[-1] == 27:
+            return 1
+
+        return 0
+
+
     def try_build_upgraded_turret(self, state: GameState, seq):
         if state.get_resource(MP) < 8:
             return False
