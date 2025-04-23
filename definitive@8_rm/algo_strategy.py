@@ -33,6 +33,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         self.sectors = []
         self.start_points = []
         self.notch_points = []
+        self.notch_tip = []
         self.funnelmode = False
 
         # turn number
@@ -101,7 +102,8 @@ class AlgoStrategy(gamelib.AlgoCore):
         self.start_points = [[3,11], [4,11], [5,11], [6,11], [7,11], [8,11], [9,11], [10,11], [11,11], [12,11], [16,11], [17,11], [18,11], [19,11], [20,11], [21,11], [22,11], [23,11], [24,11]]
         self.turrets_start_points = [[12,10], [16,10], [10,10], [8,10], [18,10], [20,10]]
         self.interceptors_start_spawn_loc = [[8,5], [19,5]]
-        self.notch_points = [[13,11],[14,10],[15,11]]
+        self.notch_points = [[13,11],[15,11]]
+        self.notch_tip = [14,10]
 
         # vertical wall
         self.vertical_wall_start_points = [[14,9], [14,8], [14,7], [14,6]]
@@ -150,7 +152,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         """Main turn entry: offense, defense, support."""
         state = GameState(self.config, turn_state)
         gamelib.debug_write(f"Turn {state.turn_number}")
-        state.suppress_warnings(True)
+        #state.suppress_warnings(True)
 
         # Update turn number
         self.last_turn = state.turn_number
@@ -172,15 +174,60 @@ class AlgoStrategy(gamelib.AlgoCore):
         if state.turn_number <= 2:
             self._interceptors_defense(state)
         else:
+
+            rim_attack = self.rim_evaluation(state)
+            funnel_attack = self.is_funnel(state)
+            keep_notch = True
+
+            gamelib.debug_write(f"opp threshold: {self.opp_threshold}, current resource: {state.get_resources(1)[1]}")
+            gamelib.debug_write(f"keep notch: {keep_notch}, rim attack: {rim_attack}, funnel attack: {funnel_attack}")
+            if self.opp_threshold and state.get_resources(1)[1] >= self.opp_threshold:
+                # Opponent likely to attack - determine attack type
+
+                # gamelib.debug_write(f"Opponent MP: {state.get_resources(1)[1]}, Rim attack: {rim_attack}, Funnel attack: {funnel_attack}")
+
+                if rim_attack:
+                    # Defend against rim attack with interceptors at the edges
+                    gamelib.debug_write("Detected rim attack strategy - deploying edge interceptors")
+
+                    # keep spawining interceptors from [5,8] until we run out of MP
+                    intercept_amt = state.get_resource(MP) // state.type_cost(INTERCEPTOR)[1]
+                    deploypoint = [5, 8] if rim_attack == 1 else [22, 8]
+
+                    for i in range(int(intercept_amt)):
+                        if state.can_spawn(INTERCEPTOR, deploypoint):
+                            state.attempt_spawn(INTERCEPTOR, deploypoint)
+                else:  # Default to interceptor defense for both funnel and general
+                    self._interceptors_defense(state)
+
+            # opponent has low MP and is unlikely to attack
+            elif self.opp_threshold and state.get_resources(1)[1] < self.estimator.confidence_interval()[0]:
+                blocked = self.is_completely_blocked(state)
+                side = self.evaluate_enemy_defense(state)
+                deploypoint = [5, 8] if side == 'l' else [22, 8]
+                scoutamt = state.get_resource(MP) // state.type_cost(SCOUT)[1]
+                self.scout_attack(state, deploypoint, int(scoutamt))
+                keep_notch = False
+
+            if keep_notch:
+                # keep the notch open
+                if state.can_spawn(WALL, self.notch_tip):
+                    state.attempt_spawn(WALL, self.notch_tip)
+                state.attempt_upgrade(self.notch_tip)
+                state.attempt_remove(self.notch_tip)
+
+            gamelib.debug_write(f"finished notch")
+
             if state.turn_number == 3:
                 self._build_far_side_walls(state, upd=True)
                 self._initial_defense(state, turrets=True)
                 self._build_vertical_wall(state)
-            else:
-                self._replace_defense(state)
 
-            if state.get_resources(1)[0] < 10 and (self.isfunnel is None):
-                self.isfunnel = self.is_funnel(state)
+            self._replace_defense(state)
+
+
+            if state.get_resources(1)[0] < 10 and (self.funnelmode is None):
+                self.funnelmode = self.is_funnel(state)
 
             self.estimator.observe(state.get_resources(1)[1])
             if self.estimator.confidence_width() <= 3:
@@ -188,23 +235,21 @@ class AlgoStrategy(gamelib.AlgoCore):
             else:
                 self.opp_threshold = None
 
-            # # --- Defense improvements ---
-            max_improvements = 20
-            for _ in range(max_improvements):
-                if state.get_resource(SP) < 2:
-                    break
-                if not self._try_improve_defense(state):
-                    break
 
 
             if self.resort_side is None:
                 self.resort_side = self.evaluate_enemy_defense(state)
                 gamelib.debug_write(f"Resort side: {self.resort_side}")
 
-            if self.funnelmode:
-                self.funnel_strategy()
 
 
+            # # --- Defense improvements ---
+            max_improvements = 12
+            for _ in range(max_improvements):
+                if state.get_resource(SP) < 3:
+                    break
+                if not self._try_improve_defense(state):
+                    break
 
 
         # --- Support management ---
@@ -486,7 +531,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         return False
 
 
-    def rim_evaluation(state: GameState) -> int:
+    def rim_evaluation(self, state: GameState) -> int:
         """
         Evaluates if there is a rim defense with at most 3 consecutive holes at one end.
 
@@ -583,6 +628,52 @@ class AlgoStrategy(gamelib.AlgoCore):
 
         # A funnel defense has all paths converging to a narrow range (4 units or less)
         return funnel_width <= 4
+
+
+    def is_completely_blocked(self, state: GameState) -> bool:
+        """
+        Checks if the opponent has completely blocked all paths to the player's edge.
+
+        Args:
+            state: The current game state
+
+        Returns:
+            True if no paths exist from opponent territory to player territory, False otherwise
+        """
+        # Use the same starting points as is_funnel
+        start_points = [
+            [6,20], [7,21], [8,22], [9,23], [10,24], [11,25], [12,26],
+            [15,26], [16,25], [17,24], [18,23], [19,22], [20,21], [21,20],
+            [22,19], [23,18], [24,17]
+        ]
+
+        # Track if any path successfully crosses to player territory
+        any_path_crosses = False
+
+        for start in start_points:
+            # Skip points that are not in bounds
+            if not state.game_map.in_arena_bounds(start):
+                continue
+
+            # Find path to edge
+            path = state.find_path_to_edge(start)
+
+            # Skip if no path found
+            if not path:
+                continue
+
+            # Check if this path crosses from opponent territory to player territory
+            for i in range(1, len(path)):
+                if path[i-1][1] >= 14 and path[i][1] < 14:
+                    # Found a crossing point - not completely blocked
+                    any_path_crosses = True
+                    break
+
+            if any_path_crosses:
+                return False
+
+        # If we've checked all starting points and none cross to player territory
+        return True
 
 
     def rebuild_far_side_walls(self, state: GameState):
